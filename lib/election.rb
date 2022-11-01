@@ -11,4 +11,10 @@ class Election
   def add_race(race)
     @races.push(race)
   end
+
+  def candidates
+    candidates = @races.map do |race|
+      race.candidates
+    end.flatten
+  end
 end
