@@ -25,4 +25,14 @@ class Election
     end
     vote_counts
   end
+
+  def winners
+    winners = []
+    @races.each do |race|
+      if race.winner
+        winners.push(race.winner)
+      end
+    end
+    winners
+  end
 end
