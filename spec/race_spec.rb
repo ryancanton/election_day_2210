@@ -26,4 +26,12 @@ RSpec.describe Race do
       expect(race.candidates).to eq([candidate1, candidate2])
     end
   end
+
+  describe '#open?' do
+    it 'returns true by default' do
+      race = Race.new("Texas Governor")
+
+      expect(race.open?).to eq(true)
+    end
+  end
 end
