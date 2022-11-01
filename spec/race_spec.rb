@@ -43,4 +43,23 @@ RSpec.describe Race do
       expect(race.open?).to eq(false)
     end
   end
+
+  describe '#winner' do
+    it 'returns false if the election is still open' do
+      race = Race.new("Texas Governor")
+
+      expect(race.winner).to eq(false)
+    end
+
+    it 'returns the candidate object with the most votes if election is closed' do
+      race = Race.new("Texas Governor")
+      candidate1 = race.register_candidate!({name: "Diana D", party: :democrat})
+      candidate2 = race.register_candidate!({name: "Roberto R", party: :republican})
+      4.times {candidate1.vote_for!}
+      1.times {candidate2.vote_for!}
+      race.close!
+
+      expect(race.winner).to eq(candidate1)
+    end
+  end
 end
