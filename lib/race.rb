@@ -7,6 +7,7 @@ class Race
     @office = office
     @candidates = []
     @open = true
+    @tie = false
   end
 
   def register_candidate!(candidate_info)
@@ -21,5 +22,24 @@ class Race
 
   def close!
     @open = false
+  end
+
+  def winner
+    if open?
+      return false
+    else
+      votes = @candidates.map { |candidate| candidate.votes}
+      winners = find_candidates_by_vote_count(votes.max)
+      if winners.count == 1
+        return winners[0]
+      else
+        @tie = true
+        return false
+      end
+    end
+  end
+
+  def find_candidates_by_vote_count(count)
+    specified_candidates = @candidates.find_all { |candidate| candidate.votes == count}
   end
 end
