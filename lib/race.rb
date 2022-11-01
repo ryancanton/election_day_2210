@@ -42,4 +42,9 @@ class Race
   def find_candidates_by_vote_count(count)
     specified_candidates = @candidates.find_all { |candidate| candidate.votes == count}
   end
+
+  def tie?
+    winner
+    @tie
+  end
 end

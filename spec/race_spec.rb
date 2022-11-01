@@ -62,4 +62,29 @@ RSpec.describe Race do
       expect(race.winner).to eq(candidate1)
     end
   end
+
+  describe '#find_candidates_by_vote_count' do
+    it 'returns array of candidates with specific vote counts' do
+      race = Race.new("Texas Governor")
+      candidate1 = race.register_candidate!({name: "Diana D", party: :democrat})
+      candidate2 = race.register_candidate!({name: "Roberto R", party: :republican})
+      4.times {candidate1.vote_for!}
+      1.times {candidate2.vote_for!}
+
+      expect(race.find_candidates_by_vote_count(4)).to eq([candidate1])
+    end
+  end
+
+  describe '#tie?' do
+    it 'returns true if the leading candidates have the same number of votes' do
+      race = Race.new("Texas Governor")
+      candidate1 = race.register_candidate!({name: "Diana D", party: :democrat})
+      candidate2 = race.register_candidate!({name: "Roberto R", party: :republican})
+      4.times {candidate1.vote_for!}
+      4.times {candidate2.vote_for!}
+      race.close!
+
+      expect(race.tie?).to eq(true)
+    end
+  end
 end
